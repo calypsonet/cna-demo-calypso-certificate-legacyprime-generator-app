@@ -60,7 +60,7 @@ public class CalypsoCertificateDemoWithFiles {
       KeyPair pcaKeyPair = KeyUtils.generateRSAKeyPair();
       KeyPair caKeyPair = KeyUtils.generateRSAKeyPair();
       KeyPair cardKeyPair = KeyUtils.generateECCKeyPair();
-      System.out.println("✓ Keys generated");
+      System.out.println("[OK] Keys generated");
 
       System.out.println("\n[2/8] Saving private keys in PEM format...");
       String pcaPrivateKeyFile = KEYS_DIR + "/pca-private.pem";
@@ -68,7 +68,7 @@ public class CalypsoCertificateDemoWithFiles {
 
       KeyUtils.savePrivateKeyToPem(pcaKeyPair.getPrivate(), pcaPrivateKeyFile);
       KeyUtils.savePrivateKeyToPem(caKeyPair.getPrivate(), caPrivateKeyFile);
-      System.out.println("✓ Keys saved:");
+      System.out.println("[OK] Keys saved:");
       System.out.println("   - " + pcaPrivateKeyFile);
       System.out.println("   - " + caPrivateKeyFile);
 
@@ -80,12 +80,12 @@ public class CalypsoCertificateDemoWithFiles {
       byte[] aid = HexUtil.toByteArray("A000000291");
       byte[] pcaKeyRef = KeyUtils.createKeyReference(aid, 1);
       store.addPcaPublicKey(pcaKeyRef, (RSAPublicKey) pcaKeyPair.getPublic());
-      System.out.println("✓ PCA key added: " + HexUtil.toHex(pcaKeyRef));
+      System.out.println("[OK] PCA key added: " + HexUtil.toHex(pcaKeyRef));
 
       System.out.println("\n[5/8] Loading PCA private key from PEM file...");
       CalypsoCertificateLegacyPrimeSigner pcaSigner =
           DefaultCalypsoCertificateLegacyPrimeSigner.fromPemFile(pcaPrivateKeyFile);
-      System.out.println("✓ PCA signer created from: " + pcaPrivateKeyFile);
+      System.out.println("[OK] PCA signer created from: " + pcaPrivateKeyFile);
 
       System.out.println("\n[6/8] Generating CA certificate...");
       byte[] caKeyRef = KeyUtils.createKeyReference(aid, 2);
@@ -102,13 +102,13 @@ public class CalypsoCertificateDemoWithFiles {
               .withCaScope((byte) 0xFF)
               .generate();
 
-      System.out.println("✓ CA certificate generated (" + caCertificate.length + " bytes)");
+      System.out.println("[OK] CA certificate generated (" + caCertificate.length + " bytes)");
       System.out.println("   CA certificate (hex):");
       CertificateUtils.printCertificate(caCertificate);
 
       System.out.println("\n[7/8] Adding CA certificate to store...");
       store.addCalypsoCaCertificateLegacyPrime(caCertificate);
-      System.out.println("✓ CA certificate added to store");
+      System.out.println("[OK] CA certificate added to store");
 
       System.out.println("\n[8/8] Generating Card certificate with signer loaded from PEM...");
       CalypsoCertificateLegacyPrimeSigner caSigner =
@@ -131,7 +131,7 @@ public class CalypsoCertificateDemoWithFiles {
               .withIndex(0)
               .generate();
 
-      System.out.println("✓ Card certificate generated (" + cardCertificate.length + " bytes)");
+      System.out.println("[OK] Card certificate generated (" + cardCertificate.length + " bytes)");
       System.out.println("   Card certificate (hex):");
       CertificateUtils.printCertificate(cardCertificate);
 

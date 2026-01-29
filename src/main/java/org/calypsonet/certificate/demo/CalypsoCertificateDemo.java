@@ -51,26 +51,26 @@ public class CalypsoCertificateDemo {
 
       System.out.println("\n[1/5] Generating cryptographic keys...");
       CryptoKeys keys = generateKeys();
-      System.out.println("✓ Keys generated successfully");
+      System.out.println("[OK] Keys generated successfully");
 
       System.out.println("\n[2/5] Adding PCA public key to store...");
       byte[] aid = HexUtil.toByteArray("A000000291");
       byte[] pcaKeyRef = KeyUtils.createKeyReference(aid, 1);
       store.addPcaPublicKey(pcaKeyRef, (RSAPublicKey) keys.pcaPublicKey);
-      System.out.println("✓ PCA key added: " + HexUtil.toHex(pcaKeyRef));
+      System.out.println("[OK] PCA key added: " + HexUtil.toHex(pcaKeyRef));
 
       System.out.println("\n[3/5] Generating CA certificate...");
       byte[] caCertificate = generateCaCertificate(factory, keys, pcaKeyRef);
-      System.out.println("✓ CA certificate generated (" + caCertificate.length + " bytes):");
+      System.out.println("[OK] CA certificate generated (" + caCertificate.length + " bytes):");
       CertificateUtils.printCertificate(caCertificate);
 
       System.out.println("\n[4/5] Adding CA certificate to store...");
       byte[] caKeyRef = store.addCalypsoCaCertificateLegacyPrime(caCertificate);
-      System.out.println("✓ CA certificate added with reference: " + HexUtil.toHex(caKeyRef));
+      System.out.println("[OK] CA certificate added with reference: " + HexUtil.toHex(caKeyRef));
 
       System.out.println("\n[5/5] Generating Card certificate...");
       byte[] cardCertificate = generateCardCertificate(factory, keys, caKeyRef);
-      System.out.println("✓ Card certificate generated (" + cardCertificate.length + " bytes):");
+      System.out.println("[OK] Card certificate generated (" + cardCertificate.length + " bytes):");
       CertificateUtils.printCertificate(cardCertificate);
 
       System.out.println("\n" + SEPARATOR);
