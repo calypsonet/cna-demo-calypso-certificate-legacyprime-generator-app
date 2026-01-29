@@ -7,30 +7,29 @@ The console demonstration project for Calypso Legacy Prime certificate generatio
 ## 📁 Project Structure
 
 ```
-calypso-certificate-demo-console/
-├── src/main/java/com/calypso/demo/
-│   ├── CalypsoCertificateDemo.java              (Simple demo)
-│   ├── CalypsoCertificateDemoWithFiles.java     (Advanced demo)
-│   └── KeyUtils.java                            (Utilities)
+cna-demo-calypso-certificate-legacyprime-generator-app/
+├── src/main/java/org/calypsonet/demo/calypso/certificate/legacyprime/generator/
+│   ├── CalypsoCertificateDemoInMemory.java      (In-memory demo)
+│   ├── CalypsoCertificateDemoWithFiles.java     (Advanced demo with files)
+│   ├── CalypsoCertificateDemoSelfSigned.java    (Self-signed CA demo)
+│   ├── KeyUtils.java                            (Key utilities)
+│   └── CertificateUtils.java                    (Certificate utilities)
 │
 ├── gradle/                                       (Gradle wrapper)
-├── build.gradle                                  (Gradle configuration)
+├── build.gradle.kts                              (Gradle configuration)
 ├── settings.gradle                               (Gradle settings)
-├── gradle.properties                             (Gradle properties)
 │
 ├── README.md                                     (Main documentation)
 ├── QUICKSTART.md                                 (Quick start guide)
 ├── PROJECT_OVERVIEW.md                           (Detailed overview)
 ├── SUMMARY.md                                    (This file)
-│
-├── run.bat                                       (Windows script)
-├── run.sh                                        (Linux/Mac script)
+├── CHANGELOG.md                                  (Version history)
 └── .gitignore                                    (Git exclusions)
 ```
 
 ## 🎯 Implemented Features
 
-### Simple Demo (`CalypsoCertificateDemo`)
+### In-Memory Demo (`CalypsoCertificateDemoInMemory`)
 - [x] Generation of RSA 2048-bit keys with exponent 65537
 - [x] Generation of ECC secp256r1 keys
 - [x] Creation of Calypso key references (29 bytes)
@@ -38,6 +37,12 @@ calypso-certificate-demo-console/
 - [x] Generation of Card certificate (316 bytes)
 - [x] Management of the certificate store
 - [x] Formatted display of certificates
+
+### Self-Signed CA Demo (`CalypsoCertificateDemoSelfSigned`)
+- [x] Self-signed CA certificate generation
+- [x] Same RSA key for both PCA and CA roles
+- [x] Demonstrates root CA as trust anchor
+- [x] Card certificate signed by self-signed CA
 
 ### Advanced Demo (`CalypsoCertificateDemoWithFiles`)
 - [x] Saving keys in PEM format
@@ -70,9 +75,10 @@ calypso-certificate-demo-console/
   BUILD SUCCESSFUL
 ```
 
-### Simple Demo Execution
+### Demo Execution
 ```bash
-✓ ./gradlew runSimple --no-daemon
+✓ ./gradlew build
+✓ java -cp ... CalypsoCertificateDemoInMemory
   Generation successful:
   - CA Certificate: 384 bytes
   - Card Certificate: 316 bytes
@@ -105,18 +111,24 @@ cd ../calypsonet-terminal-calypso-certificate-legacyprime-java-lib
 ./gradlew publishToMavenLocal
 
 # 2. Compile and run
-cd ../calypso-certificate-demo-console
+cd ../cna-demo-calypso-certificate-legacyprime-generator-app
 ./gradlew build
-./gradlew runSimple
+java -cp "build/classes/java/main:..." \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoInMemory
 ```
 
 ### Common Usage
 ```bash
-# Simple demo (in-memory)
-./gradlew runSimple
+# Build the project
+./gradlew build
 
-# Advanced demo (PEM files)
-./gradlew runWithFiles
+# Run in-memory demo
+java -cp "build/classes/java/main:..." \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoInMemory
+
+# Run demo with files
+java -cp "build/classes/java/main:..." \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoWithFiles
 
 # Recompile
 ./gradlew clean build

@@ -28,13 +28,12 @@ This console project provides a comprehensive demonstration of the Calypso APIs 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Console Demo                             │
-│  ┌─────────────────────┐     ┌─────────────────────────┐    │
-│  │ Simple Demo         │     │ Advanced Demo (PEM)     │    │
-│  │ - In-memory keys    │     │ - File-based keys       │    │
-│  │ - Direct usage      │     │ - Key persistence       │    │
-│  └──────────┬──────────┘     └──────────┬──────────────┘    │
-│             │                           │                   │
-│             └───────────┬───────────────┘                   │
+│  ┌────────────┐  ┌────────────┐  ┌────────────────────┐     │
+│  │ In-Memory  │  │ With Files │  │ Self-Signed CA     │     │
+│  │ Demo       │  │ Demo       │  │ Demo               │     │
+│  └──────┬─────┘  └──────┬─────┘  └──────┬─────────────┘     │
+│         │               │               │                   │
+│         └───────────────┴───────────────┘                   │
 │                         │                                   │
 └─────────────────────────┼───────────────────────────────────┘
                           │
@@ -64,9 +63,9 @@ This console project provides a comprehensive demonstration of the Calypso APIs 
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Comparison of the Two Demos
+## Comparison of the Demos
 
-### Simple Demo (`CalypsoCertificateDemo.java`)
+### In-Memory Demo (`CalypsoCertificateDemoInMemory.java`)
 
 **Use case:** Quick demonstration, prototyping, testing
 

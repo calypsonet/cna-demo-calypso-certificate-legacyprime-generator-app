@@ -14,7 +14,7 @@ cd calypsonet-terminal-calypso-certificate-legacyprime-java-api
 cd ../calypsonet-terminal-calypso-certificate-legacyprime-java-lib
 ./gradlew publishToMavenLocal
 
-cd ../calypso-certificate-demo-console
+cd ../cna-demo-calypso-certificate-legacyprime-generator-app
 ```
 
 ### 2. Compile the Project
@@ -25,12 +25,14 @@ cd ../calypso-certificate-demo-console
 
 ## Execution
 
-### Simple Demo (In-Memory)
+### In-Memory Demo
 
 This version generates all keys in memory:
 
 ```bash
-./gradlew runSimple
+./gradlew build
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoInMemory
 ```
 
 **Expected output:**
@@ -74,26 +76,21 @@ DEMONSTRATION COMPLETED SUCCESSFULLY
 This version saves and loads keys from files:
 
 ```bash
-./gradlew runWithFiles
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoWithFiles
 ```
 
 This demo creates a `keys/` directory containing:
 - `pca-private.pem` - PCA private key
 - `ca-private.pem` - CA private key
 
-## Launch Scripts
+### Self-Signed CA Demo
 
-### Windows
-
-```cmd
-run.bat
-```
-
-### Linux/Mac
+This version demonstrates a self-signed CA setup:
 
 ```bash
-chmod +x run.sh
-./run.sh
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoSelfSigned
 ```
 
 ## Structure of Generated Certificates

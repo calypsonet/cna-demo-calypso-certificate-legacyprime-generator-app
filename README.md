@@ -30,13 +30,16 @@ cna-demo-calypso-certificate-legacyprime-generator-app/
 │       └── java/
 │           └── org/
 │               └── calypsonet/
-│                   └── certificate/
-│                       └── demo/
-│                           ├── CalypsoCertificateDemoInMemory.java   (in-memory demo)
-│                           ├── CalypsoCertificateDemoWithFiles.java  (demo with PEM files)
-│                           ├── CalypsoCertificateDemoSelfSigned.java (self-signed CA demo)
-│                           ├── KeyUtils.java                         (key utilities)
-│                           └── CertificateUtils.java                 (certificate utilities)
+│                   └── demo/
+│                       └── calypso/
+│                           └── certificate/
+│                               └── legacyprime/
+│                                   └── generator/
+│                                       ├── CalypsoCertificateDemoInMemory.java   (in-memory demo)
+│                                       ├── CalypsoCertificateDemoWithFiles.java  (demo with PEM files)
+│                                       ├── CalypsoCertificateDemoSelfSigned.java (self-signed CA demo)
+│                                       ├── KeyUtils.java                         (key utilities)
+│                                       └── CertificateUtils.java                 (certificate utilities)
 ├── build.gradle.kts
 ├── settings.gradle
 └── README.md

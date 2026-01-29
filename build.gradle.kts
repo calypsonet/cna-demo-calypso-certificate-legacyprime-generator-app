@@ -3,7 +3,7 @@ plugins {
   id("com.diffplug.spotless") version "8.2.1"
 }
 
-group = "org.calypsonet.certificate.demo"
+group = "org.calypsonet.demo.calypso.certificate.legacyprime.generator"
 
 version = "1.0.0"
 
