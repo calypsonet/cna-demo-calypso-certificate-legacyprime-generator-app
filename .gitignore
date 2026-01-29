@@ -47,3 +47,12 @@ hs_err_pid*
 *.bak
 *.swp
 *~
+
+# Cryptographic keys (NEVER commit private keys!)
+keys/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
