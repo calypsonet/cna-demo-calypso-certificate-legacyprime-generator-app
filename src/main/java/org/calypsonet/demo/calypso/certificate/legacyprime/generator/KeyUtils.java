@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.certificate.demo;
+package org.calypsonet.demo.calypso.certificate.legacyprime.generator;
 
 import java.io.FileReader;
 import java.io.FileWriter;

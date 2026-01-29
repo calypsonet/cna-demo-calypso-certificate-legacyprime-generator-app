@@ -9,32 +9,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.certificate.demo;
+package org.calypsonet.demo.calypso.certificate.legacyprime.generator;
 
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.*;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.DefaultCalypsoCertificateLegacyPrimeSigner;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.spi.CalypsoCertificateLegacyPrimeSigner;
 import org.eclipse.keyple.core.util.HexUtil;
 
 /**
- * Demonstration of Calypso Legacy Prime certificate generation.
+ * In-memory demonstration of Calypso Legacy Prime certificate generation.
  *
  * <p>This program demonstrates: 1. RSA and ECC key generation 2. CA (Certificate Authority)
  * certificate creation 3. Card certificate creation 4. Certificate store usage for certificate
  * management
+ *
+ * <p>All keys are generated and stored in memory only (no file persistence).
  */
-public class CalypsoCertificateDemo {
+public class CalypsoCertificateDemoInMemory {
 
   private static final String SEPARATOR = "=".repeat(80);
-
-  static {
-    // Add Bouncy Castle as security provider
-    Security.addProvider(new BouncyCastleProvider());
-  }
+  private static final String AID_ROOT = "A000000291";
 
   public static void main(String[] args) {
     System.out.println(SEPARATOR);
@@ -54,7 +51,7 @@ public class CalypsoCertificateDemo {
       System.out.println("[OK] Keys generated successfully");
 
       System.out.println("\n[2/5] Adding PCA public key to store...");
-      byte[] aid = HexUtil.toByteArray("A000000291");
+      byte[] aid = HexUtil.toByteArray(AID_ROOT);
       byte[] pcaKeyRef = KeyUtils.createKeyReference(aid, 1);
       store.addPcaPublicKey(pcaKeyRef, (RSAPublicKey) keys.pcaPublicKey);
       System.out.println("[OK] PCA key added: " + HexUtil.toHex(pcaKeyRef));
@@ -102,23 +99,23 @@ public class CalypsoCertificateDemo {
    * RSA signature)
    */
   private static byte[] generateCaCertificate(
-      CalypsoCertificateLegacyPrimeApiFactory factory, CryptoKeys keys, byte[] pcaKeyRef)
-      throws Exception {
+      CalypsoCertificateLegacyPrimeApiFactory factory, CryptoKeys keys, byte[] pcaKeyRef) {
 
     // Create a signer with the PCA private key
     CalypsoCertificateLegacyPrimeSigner pcaSigner =
-        new DefaultCalypsoCertificateLegacyPrimeSigner((RSAPrivateKey) keys.pcaPrivateKey);
+        DefaultCalypsoCertificateLegacyPrimeSigner.fromRSAPrivateKey(
+            (RSAPrivateKey) keys.pcaPrivateKey);
 
     // Create the CA certificate generator
     CalypsoCaCertificateLegacyPrimeGenerator generator =
         factory.createCalypsoCaCertificateLegacyPrimeGenerator(pcaKeyRef, pcaSigner);
 
     // CA public key reference (different from PCA)
-    byte[] aid = HexUtil.toByteArray("A000000291");
+    byte[] aid = HexUtil.toByteArray(AID_ROOT);
     byte[] caPublicKeyRef = KeyUtils.createKeyReference(aid, 2);
 
     // Target Application ID (AID)
-    byte[] targetAid = HexUtil.toByteArray("A000000291");
+    byte[] targetAid = HexUtil.toByteArray(AID_ROOT);
 
     // Configure and generate the certificate
     byte[] certificate =
@@ -144,12 +141,12 @@ public class CalypsoCertificateDemo {
    * recoverable data)
    */
   private static byte[] generateCardCertificate(
-      CalypsoCertificateLegacyPrimeApiFactory factory, CryptoKeys keys, byte[] caKeyRef)
-      throws Exception {
+      CalypsoCertificateLegacyPrimeApiFactory factory, CryptoKeys keys, byte[] caKeyRef) {
 
     // Create a signer with the CA private key
     CalypsoCertificateLegacyPrimeSigner caSigner =
-        new DefaultCalypsoCertificateLegacyPrimeSigner((RSAPrivateKey) keys.caPrivateKey);
+        DefaultCalypsoCertificateLegacyPrimeSigner.fromRSAPrivateKey(
+            (RSAPrivateKey) keys.caPrivateKey);
 
     // Create the Card certificate generator
     CalypsoCardCertificateLegacyPrimeGenerator generator =
@@ -159,7 +156,7 @@ public class CalypsoCertificateDemo {
     byte[] cardPublicKey = KeyUtils.extractECCPublicKeyRaw(keys.cardPublicKey);
 
     // Card data
-    byte[] cardAid = HexUtil.toByteArray("A000000291AABBCC");
+    byte[] cardAid = HexUtil.toByteArray(AID_ROOT + "AABBCC");
     byte[] cardSerialNumber = HexUtil.toByteArray("0123456789ABCDEF");
     byte[] cardStartupInfo = HexUtil.toByteArray("00112233445566");
 

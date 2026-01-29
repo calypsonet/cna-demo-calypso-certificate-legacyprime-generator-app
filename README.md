@@ -24,21 +24,21 @@ This program illustrates the following steps:
 ## Project Structure
 
 ```
-calypso-certificate-demo-console/
+cna-demo-calypso-certificate-legacyprime-generator-app/
 ├── src/
 │   └── main/
 │       └── java/
-│           └── com/
-│               └── calypso/
-│                   └── demo/
-│                       ├── CalypsoCertificateDemo.java           (simple demo)
-│                       ├── CalypsoCertificateDemoWithFiles.java  (demo with PEM files)
-│                       └── KeyUtils.java                        (utilities)
-├── build.gradle
+│           └── org/
+│               └── calypsonet/
+│                   └── certificate/
+│                       └── demo/
+│                           ├── CalypsoCertificateDemoInMemory.java   (in-memory demo)
+│                           ├── CalypsoCertificateDemoWithFiles.java  (demo with PEM files)
+│                           ├── CalypsoCertificateDemoSelfSigned.java (self-signed CA demo)
+│                           ├── KeyUtils.java                         (key utilities)
+│                           └── CertificateUtils.java                 (certificate utilities)
+├── build.gradle.kts
 ├── settings.gradle
-├── gradle.properties
-├── run.bat         (Windows script)
-├── run.sh          (Linux/Mac script)
 └── README.md
 ```
 
@@ -63,75 +63,53 @@ cd ../calypsonet-terminal-calypso-certificate-legacyprime-java-lib
 gradle publishToMavenLocal
 ```
 
-## Compilation and Execution
-
-### With Gradle
+## Compilation
 
 ```bash
-# Compilation
-gradle build
-
-# Run the simple demo (in-memory)
-gradle run
-# or
-gradle runSimple
-
-# Run the demo with PEM files
-gradle runWithFiles
-```
-
-### With Gradle Wrapper (recommended)
-
-```bash
-# Compilation
+# Build with Gradle Wrapper (recommended)
 ./gradlew build      # Linux/Mac
 gradlew.bat build    # Windows
-
-# Run the simple demo
-./gradlew run        # Linux/Mac
-gradlew.bat run      # Windows
-
-# Run the demo with PEM files
-./gradlew runWithFiles      # Linux/Mac
-gradlew.bat runWithFiles    # Windows
 ```
 
-### With the provided scripts
+## Running the Demonstrations
+
+After building, you can run the demonstrations using the Java command with the runtime classpath.
+
+### Available Demonstrations
+
+**1. CalypsoCertificateDemoInMemory** - In-memory demonstration
+- PCA → CA → Card certificate chain
+- All keys generated and stored in memory only
+- No file persistence
+
+**2. CalypsoCertificateDemoWithFiles** - Advanced demonstration with PEM files
+- Saves/loads private keys in PEM format
+- Creates a `keys/` directory with PCA and CA private keys
+- Demonstrates key persistence and reuse
+
+**3. CalypsoCertificateDemoSelfSigned** - Self-signed CA demonstration
+- Same RSA key for both PCA (issuer) and CA (subject) roles
+- Demonstrates a root CA as its own trust anchor
+
+### Execution
+
+Run the desired demo class:
 
 ```bash
-# Windows
-run.bat
+# Example: In-memory demo
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoInMemory
 
-# Linux/Mac
-chmod +x run.sh
-./run.sh
+# Example: Demo with files
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoWithFiles
+
+# Example: Self-signed demo
+java -cp "build/classes/java/main:$HOME/.gradle/caches/modules-2/files-2.1/*/*/*.jar" \
+  org.calypsonet.demo.calypso.certificate.legacyprime.generator.CalypsoCertificateDemoSelfSigned
 ```
 
-## Two Demo Versions
-
-### 1. CalypsoCertificateDemo (Simple)
-
-The simple version generates all keys in memory and demonstrates:
-- Generation of RSA and ECC keys
-- Direct creation of signers with `new DefaultCalypsoCertificateLegacyPrimeSigner(privateKey)`
-- Generation of CA and Card certificates
-- Use of the store
-
-**Command**: `gradle run` or `gradle runSimple`
-
-### 2. CalypsoCertificateDemoWithFiles (Advanced)
-
-The advanced version saves and loads keys from PEM files and demonstrates:
-- Generation and saving of keys in PEM format
-- Loading keys with `DefaultCalypsoCertificateLegacyPrimeSigner.fromPemFile()`
-- Reuse of existing keys
-- Management of key files
-
-**Command**: `gradle runWithFiles`
-
-This version creates a `keys/` directory containing:
-- `pca-private.pem` - PCA private key
-- `ca-private.pem` - CA private key
+**Note**: Adjust the classpath pattern according to your environment and dependency locations.
 
 ## Expected Output
 
@@ -151,28 +129,28 @@ CALYPSO LEGACY PRIME CERTIFICATE GENERATION DEMONSTRATION
 ================================================================================
 
 [1/5] Generating cryptographic keys...
-✓ Keys generated successfully
+[OK] Keys generated successfully
 
 [2/5] Adding PCA public key to store...
-✓ PCA key added: 05A00000029100000000000000000000000000000000000001
+[OK] PCA key added: 05A00000029100000000000000000000000000000000000001
 
 [3/5] Generating CA certificate...
    - CA key reference: 05A00000029100000000000000000000000000000000000002
    - Target AID: A000000291
    - Validity: 2024-01-01 to 2034-12-31
    - CA rights: 0x0A (CA + Card signing)
-✓ CA certificate generated (384 bytes):
+[OK] CA certificate generated (384 bytes):
    ...
 
 [4/5] Adding CA certificate to store...
-✓ CA certificate added with reference: ...
+[OK] CA certificate added with reference: ...
 
 [5/5] Generating Card certificate...
    - Card AID: A000000291AABBCC
    - Serial number: 0123456789ABCDEF
    - Startup info: 00112233445566
    - Validity: 2024-01-01 to 2029-12-31
-✓ Card certificate generated (316 bytes):
+[OK] Card certificate generated (316 bytes):
    ...
 
 ================================================================================

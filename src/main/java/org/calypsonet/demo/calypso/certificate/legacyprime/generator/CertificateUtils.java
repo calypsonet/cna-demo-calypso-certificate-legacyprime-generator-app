@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.certificate.demo;
+package org.calypsonet.demo.calypso.certificate.legacyprime.generator;
 
 import org.eclipse.keyple.core.util.HexUtil;
 

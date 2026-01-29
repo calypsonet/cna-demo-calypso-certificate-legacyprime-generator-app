@@ -9,13 +9,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.calypsonet.certificate.demo;
+package org.calypsonet.demo.calypso.certificate.legacyprime.generator;
 
 import java.io.File;
 import java.security.KeyPair;
-import java.security.Security;
 import java.security.interfaces.RSAPublicKey;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.*;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.DefaultCalypsoCertificateLegacyPrimeSigner;
 import org.calypsonet.terminal.calypso.certificate.legacyprime.spi.CalypsoCertificateLegacyPrimeSigner;
@@ -32,10 +30,7 @@ public class CalypsoCertificateDemoWithFiles {
 
   private static final String SEPARATOR = "=".repeat(80);
   private static final String KEYS_DIR = "keys";
-
-  static {
-    Security.addProvider(new BouncyCastleProvider());
-  }
+  private static final String AID_ROOT = "A000000291";
 
   public static void main(String[] args) {
     System.out.println(SEPARATOR);
@@ -77,7 +72,7 @@ public class CalypsoCertificateDemoWithFiles {
       KeyUtils.printRSAKeyInfo("CA public key", (RSAPublicKey) caKeyPair.getPublic());
 
       System.out.println("\n[4/8] Adding PCA public key to store...");
-      byte[] aid = HexUtil.toByteArray("A000000291");
+      byte[] aid = HexUtil.toByteArray(AID_ROOT);
       byte[] pcaKeyRef = KeyUtils.createKeyReference(aid, 1);
       store.addPcaPublicKey(pcaKeyRef, (RSAPublicKey) pcaKeyPair.getPublic());
       System.out.println("[OK] PCA key added: " + HexUtil.toHex(pcaKeyRef));
@@ -89,7 +84,7 @@ public class CalypsoCertificateDemoWithFiles {
 
       System.out.println("\n[6/8] Generating CA certificate...");
       byte[] caKeyRef = KeyUtils.createKeyReference(aid, 2);
-      byte[] targetAid = HexUtil.toByteArray("A000000291");
+      byte[] targetAid = HexUtil.toByteArray(AID_ROOT);
 
       byte[] caCertificate =
           factory
@@ -115,7 +110,7 @@ public class CalypsoCertificateDemoWithFiles {
           DefaultCalypsoCertificateLegacyPrimeSigner.fromPemFile(caPrivateKeyFile);
 
       byte[] cardPublicKey = KeyUtils.extractECCPublicKeyRaw(cardKeyPair.getPublic());
-      byte[] cardAid = HexUtil.toByteArray("A000000291112233");
+      byte[] cardAid = HexUtil.toByteArray(AID_ROOT + "AABBCC");
       byte[] cardSerialNumber = HexUtil.toByteArray("0123456789ABCDEF");
       byte[] cardStartupInfo = HexUtil.toByteArray("00112233445566");
 
