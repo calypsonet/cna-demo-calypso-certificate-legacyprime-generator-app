@@ -27,12 +27,12 @@ This console project provides a comprehensive demonstration of the Calypso APIs 
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Console Demo                              │
-│  ┌─────────────────────┐     ┌─────────────────────────┐   │
-│  │ Simple Demo         │     │ Advanced Demo (PEM)     │   │
-│  │ - In-memory keys    │     │ - File-based keys       │   │
-│  │ - Direct usage      │     │ - Key persistence       │   │
-│  └──────────┬──────────┘     └──────────┬──────────────┘   │
+│                    Console Demo                             │
+│  ┌─────────────────────┐     ┌─────────────────────────┐    │
+│  │ Simple Demo         │     │ Advanced Demo (PEM)     │    │
+│  │ - In-memory keys    │     │ - File-based keys       │    │
+│  │ - Direct usage      │     │ - Key persistence       │    │
+│  └──────────┬──────────┘     └──────────┬──────────────┘    │
 │             │                           │                   │
 │             └───────────┬───────────────┘                   │
 │                         │                                   │
@@ -40,24 +40,24 @@ This console project provides a comprehensive demonstration of the Calypso APIs 
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              Calypso Certificate Library                     │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ DefaultCalypsoCertificateLegacyPrimeSigner          │  │
-│  │ - ISO 9796-2 PSS signature                          │  │
-│  │ - SHA-256 digest                                     │  │
-│  │ - PEM file loading                                   │  │
-│  └──────────────────────────────────────────────────────┘  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ CalypsoCertificateLegacyPrimeApiFactory             │  │
-│  │ - CA Generator                                       │  │
-│  │ - Card Generator                                     │  │
-│  │ - Certificate Store                                  │  │
-│  └──────────────────────────────────────────────────────┘  │
+│              Calypso Certificate Library                    │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ DefaultCalypsoCertificateLegacyPrimeSigner           │   │
+│  │ - ISO 9796-2 PSS signature                           │   │
+│  │ - SHA-256 digest                                     │   │
+│  │ - PEM file loading                                   │   │
+│  └──────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ CalypsoCertificateLegacyPrimeApiFactory              │   │
+│  │ - CA Generator                                       │   │
+│  │ - Card Generator                                     │   │
+│  │ - Certificate Store                                  │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              Calypso Certificate API                         │
+│              Calypso Certificate API                        │
 │  - Public interfaces                                        │
 │  - Data types                                               │
 │  - Exceptions                                               │
