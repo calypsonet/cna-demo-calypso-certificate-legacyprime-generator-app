@@ -4,7 +4,7 @@ plugins {
   id("com.diffplug.spotless") version "8.2.1"
 }
 
-group = "com.calypso.demo"
+group = "org.calypsonet.certificate.demo"
 
 version = "1.0.0"
 
@@ -34,7 +34,7 @@ dependencies {
   implementation("org.slf4j:slf4j-simple:1.7.36")
 }
 
-application { mainClass.set("com.calypso.demo.CalypsoCertificateDemo") }
+application { mainClass.set("org.calypsonet.certificate.demo.CalypsoCertificateDemo") }
 
 java {
   sourceCompatibility = JavaVersion.VERSION_11
@@ -55,4 +55,13 @@ tasks {
       ktfmt()
     }
   }
+
+  register<JavaExec>("runWithFiles") {
+    group = "application"
+    description = "Run CalypsoCertificateDemoWithFiles (advanced demo with PEM files)"
+    mainClass.set("org.calypsonet.certificate.demo.CalypsoCertificateDemoWithFiles")
+    classpath = sourceSets.main.get().runtimeClasspath
+  }
+
+  withType<JavaCompile> { options.encoding = "UTF-8" }
 }
