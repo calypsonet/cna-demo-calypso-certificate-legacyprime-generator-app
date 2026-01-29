@@ -104,7 +104,7 @@ public class CalypsoCertificateDemoWithFiles {
 
       System.out.println("✓ CA certificate generated (" + caCertificate.length + " bytes)");
       System.out.println("   CA certificate (hex):");
-      CertificateUtils.printCertificateCompact(caCertificate, 4);
+      CertificateUtils.printCertificate(caCertificate);
 
       System.out.println("\n[7/8] Adding CA certificate to store...");
       store.addCalypsoCaCertificateLegacyPrime(caCertificate);
@@ -133,7 +133,7 @@ public class CalypsoCertificateDemoWithFiles {
 
       System.out.println("✓ Card certificate generated (" + cardCertificate.length + " bytes)");
       System.out.println("   Card certificate (hex):");
-      CertificateUtils.printCertificateCompact(cardCertificate, 4);
+      CertificateUtils.printCertificate(cardCertificate);
 
       System.out.println("\n" + SEPARATOR);
       System.out.println("DEMONSTRATION COMPLETED SUCCESSFULLY");

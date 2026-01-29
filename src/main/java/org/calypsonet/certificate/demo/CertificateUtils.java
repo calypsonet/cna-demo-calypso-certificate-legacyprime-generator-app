@@ -14,10 +14,9 @@ package org.calypsonet.certificate.demo;
 import org.eclipse.keyple.core.util.HexUtil;
 
 /**
- * Utilities for certificate display and formatting.
+ * Utilities for certificate display.
  *
- * <p>This class provides methods for: - Displaying certificates in hexadecimal format - Formatting
- * certificate output with various display options
+ * <p>This class provides methods for displaying certificates in hexadecimal format.
  */
 public class CertificateUtils {
 
@@ -26,7 +25,7 @@ public class CertificateUtils {
   }
 
   /**
-   * Displays a certificate in hexadecimal format (full output).
+   * Displays a certificate in hexadecimal format.
    *
    * <p>The certificate is displayed in blocks of 64 characters (32 bytes) per line, with
    * indentation for readability.
@@ -39,47 +38,6 @@ public class CertificateUtils {
     // Display in blocks of 64 characters (32 bytes)
     for (int i = 0; i < hex.length(); i += 64) {
       int end = Math.min(i + 64, hex.length());
-      System.out.println("   " + hex.substring(i, end));
-    }
-  }
-
-  /**
-   * Displays a certificate in compact hexadecimal format (limited lines).
-   *
-   * <p>The certificate is displayed in blocks of 64 characters per line, up to a maximum number of
-   * lines. If the certificate is longer, an ellipsis and byte count are shown.
-   *
-   * @param certificate The certificate bytes to display.
-   * @param maxLines Maximum number of lines to display (recommended: 4-8).
-   */
-  public static void printCertificateCompact(byte[] certificate, int maxLines) {
-    String hex = HexUtil.toHex(certificate);
-    int lineLength = 64;
-    int linesShown = 0;
-
-    for (int i = 0; i < hex.length() && linesShown < maxLines; i += lineLength) {
-      int end = Math.min(i + lineLength, hex.length());
-      System.out.println("   " + hex.substring(i, end));
-      linesShown++;
-    }
-
-    if (hex.length() > lineLength * maxLines) {
-      int remainingBytes = certificate.length - (maxLines * 32);
-      System.out.println("   ... (" + remainingBytes + " bytes remaining)");
-    }
-  }
-
-  /**
-   * Displays a certificate with a custom line length.
-   *
-   * @param certificate The certificate bytes to display.
-   * @param charsPerLine Number of hexadecimal characters per line (should be even).
-   */
-  public static void printCertificateCustom(byte[] certificate, int charsPerLine) {
-    String hex = HexUtil.toHex(certificate);
-
-    for (int i = 0; i < hex.length(); i += charsPerLine) {
-      int end = Math.min(i + charsPerLine, hex.length());
       System.out.println("   " + hex.substring(i, end));
     }
   }
