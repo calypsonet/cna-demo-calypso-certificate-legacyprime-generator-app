@@ -15,12 +15,12 @@ repositories {
 dependencies {
   // Calypso Certificate APIs
   implementation(
-      "org.calypsonet:calypsonet-terminal-calypso-certificate-legacyprime-java-api:0.1.0-SNAPSHOT"
+      "org.calypsonet:calypsonet-terminal-calypso-certificate-legacyprime-jvm-api:0.1.0-SNAPSHOT"
   ) {
     isChanging = true
   }
   implementation(
-      "org.calypsonet:calypsonet-terminal-calypso-certificate-legacyprime-java-lib:0.1.0-SNAPSHOT"
+      "org.calypsonet:calypsonet-terminal-calypso-certificate-legacyprime-jvm-lib:0.1.0-SNAPSHOT"
   ) {
     isChanging = true
   }
